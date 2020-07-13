@@ -7,7 +7,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>795,1164</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>887,1441</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Busqueda_usuario_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="26">
@@ -68,36 +68,16 @@
       <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
     </scg:Dictionary>
   </sap:WorkflowViewStateService.ViewState>
-  <Sequence DisplayName="Busqueda Usuario" sap:VirtualizedContainerService.HintSize="621,1099" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Busqueda Usuario" sap:VirtualizedContainerService.HintSize="897,1376" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="varStrpassword">
-        <Variable.Default>
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;PassDominio&quot;).ToString" />
-        </Variable.Default>
-      </Variable>
-      <Variable x:TypeArguments="ss:SecureString" Name="varStrpasswordSecure">
-        <Variable.Default>
-          <mva:VisualBasicValue x:TypeArguments="ss:SecureString" ExpressionText="(new System.Net.NetworkCredential(&quot;&quot;, varStrpassword)).SecurePassword" />
-        </Variable.Default>
-      </Variable>
-      <Variable x:TypeArguments="x:String" Name="varStrUsername">
-        <Variable.Default>
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;UserDominio&quot;).ToString" />
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="x:String" Default="[in_Config(&quot;PassDominio&quot;).ToString]" Name="varStrpassword" />
+      <Variable x:TypeArguments="ss:SecureString" Default="[(new System.Net.NetworkCredential(&quot;&quot;, varStrpassword)).SecurePassword]" Name="varStrpasswordSecure" />
+      <Variable x:TypeArguments="x:String" Default="[in_Config(&quot;UserDominio&quot;).ToString]" Name="varStrUsername" />
       <Variable x:TypeArguments="x:Boolean" Name="existe" />
       <Variable x:TypeArguments="s:String[]" Name="grupos" />
       <Variable x:TypeArguments="x:String" Default="[Datetime.Now.Tostring(“MMMM”)]" Name="varStrMonthOU" />
-      <Variable x:TypeArguments="x:String" Name="varStrUsuariosBorrarOU">
-        <Variable.Default>
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;UsuariosBorrarOU&quot;).ToString + varStrmonthOU" />
-        </Variable.Default>
-      </Variable>
-      <Variable x:TypeArguments="x:String" Name="varStrADServer">
-        <Variable.Default>
-          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;ControladorDominio&quot;).ToString" />
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="x:String" Default="[in_Config(&quot;UsuariosBorrarOU&quot;).ToString + varStrmonthOU]" Name="varStrUsuariosBorrarOU" />
+      <Variable x:TypeArguments="x:String" Default="[in_Config(&quot;ControladorDominio&quot;).ToString]" Name="varStrADServer" />
       <Variable x:TypeArguments="x:Boolean" Name="varBolUsuarioExiste" />
       <Variable x:TypeArguments="x:String" Name="varStrUserDistName" />
       <Variable x:TypeArguments="s:String[]" Name="varStrGroups" />
@@ -107,52 +87,71 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <a:UserExistsInAD UserEmail="{x:Null}" DisplayName="User exists in AD" DomainName="[varStrADServer]" sap:VirtualizedContainerService.HintSize="579,22" sap2010:WorkflowViewState.IdRef="UserExistsInAD_1" Result="[varBolUsuarioExiste]" UserName="[inNombreUser]" />
-    <If Condition="[varBolUsuarioExiste]" sap:VirtualizedContainerService.HintSize="579,945" sap2010:WorkflowViewState.IdRef="If_1">
+    <a:UserExistsInAD UserEmail="{x:Null}" DisplayName="User exists in AD" DomainName="[varStrADServer]" sap:VirtualizedContainerService.HintSize="855,22" sap2010:WorkflowViewState.IdRef="UserExistsInAD_1" Result="[varBolUsuarioExiste]" UserName="[inNombreUser]" />
+    <If Condition="[varBolUsuarioExiste]" sap:VirtualizedContainerService.HintSize="855,1222" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
-        <p:ActiveDirectoryScope ActiveDirectoryServer="[varStrADServer]" DisplayName="Active Directory Scope" sap:VirtualizedContainerService.HintSize="434,797" sap2010:WorkflowViewState.IdRef="ActiveDirectoryScope_1" Password="[varStrpasswordSecure]" Username="[varStrUsername]">
-          <p:ActiveDirectoryScope.Body>
-            <ActivityAction x:TypeArguments="uas:ActiveDirectoryService">
-              <ActivityAction.Argument>
-                <DelegateInArgument x:TypeArguments="uas:ActiveDirectoryService" Name="ActiveDirectoryScopeConnectionName" />
-              </ActivityAction.Argument>
-              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="349,711" sap2010:WorkflowViewState.IdRef="Sequence_3">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <p:GetObjectDistinguishedName DisplayName="Get Object Distinguished Name" DistinguishedName="[varStrUserDistName]" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="GetObjectDistinguishedName_2" SAMAccountName="[inNombreUser]" />
-                <p:SetUserStatus DisplayName="Set User Status" DistinguishedName="[varStrUserDistName]" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="SetUserStatus_1" Status="Disabled" />
-                <p:SetUserExpirationDate DisplayName="Set User Expiration Date" DistinguishedName="[inNombreUser]" ExpirationDate="[in_fechaFinal]" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="SetUserExpirationDate_1" />
-                <p:GetUserGroups DisplayName="Get User Groups" Groups="[varStrGroups]" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="GetUserGroups_1" UserDistinguishedName="[varStrUserDistName]" />
-                <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="307,309" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[varStrGroups]">
-                  <ui:ForEach.Body>
-                    <ActivityAction x:TypeArguments="x:Object">
-                      <ActivityAction.Argument>
-                        <DelegateInArgument x:TypeArguments="x:Object" Name="group" />
-                      </ActivityAction.Argument>
-                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="242,176" sap2010:WorkflowViewState.IdRef="Sequence_5">
-                        <Sequence.Variables>
-                          <Variable x:TypeArguments="x:String" Name="varStrNombreDistGroup" />
-                        </Sequence.Variables>
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                        <p:GetObjectDistinguishedName DisplayName="Get Object Distinguished Name" DistinguishedName="[varStrNombreDistGroup]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GetObjectDistinguishedName_3" SAMAccountName="[group.ToString]" />
-                        <p:RemoveUserFromGroup DisplayName="Remove User from Group" GroupDistinguishedName="[varStrNombreDistGroup]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="RemoveUserFromGroup_1" UserDistinguishedName="[varStrUserDistName]" />
-                      </Sequence>
-                    </ActivityAction>
-                  </ui:ForEach.Body>
-                </ui:ForEach>
-                <p:MoveObject DisplayName="Move Object" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="MoveObject_1" NewParentDistinguishedName="[varStrUsuariosBorrarOU]" ObjectDistinguishedName="[varStrUserDistName]" />
-              </Sequence>
-            </ActivityAction>
-          </p:ActiveDirectoryScope.Body>
-        </p:ActiveDirectoryScope>
+        <Sequence sap:VirtualizedContainerService.HintSize="476,1074" sap2010:WorkflowViewState.IdRef="Sequence_6">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <p:ActiveDirectoryScope ActiveDirectoryServer="[varStrADServer]" DisplayName="Active Directory Scope" sap:VirtualizedContainerService.HintSize="434,797" sap2010:WorkflowViewState.IdRef="ActiveDirectoryScope_1" Password="[varStrpasswordSecure]" Username="[varStrUsername]">
+            <p:ActiveDirectoryScope.Body>
+              <ActivityAction x:TypeArguments="uas:ActiveDirectoryService">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="uas:ActiveDirectoryService" Name="ActiveDirectoryScopeConnectionName" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="349,711" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <p:GetObjectDistinguishedName DisplayName="Get Object Distinguished Name" DistinguishedName="[varStrUserDistName]" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="GetObjectDistinguishedName_2" SAMAccountName="[inNombreUser]" />
+                  <p:SetUserStatus DisplayName="Set User Status" DistinguishedName="[varStrUserDistName]" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="SetUserStatus_1" Status="Disabled" />
+                  <p:SetUserExpirationDate DisplayName="Set User Expiration Date" DistinguishedName="[inNombreUser]" ExpirationDate="[in_fechaFinal]" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="SetUserExpirationDate_1" />
+                  <p:GetUserGroups DisplayName="Get User Groups" Groups="[varStrGroups]" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="GetUserGroups_1" UserDistinguishedName="[varStrUserDistName]" />
+                  <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="307,309" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[varStrGroups]">
+                    <ui:ForEach.Body>
+                      <ActivityAction x:TypeArguments="x:Object">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:Object" Name="group" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="242,176" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="x:String" Name="varStrNombreDistGroup" />
+                          </Sequence.Variables>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <p:GetObjectDistinguishedName DisplayName="Get Object Distinguished Name" DistinguishedName="[varStrNombreDistGroup]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GetObjectDistinguishedName_3" SAMAccountName="[group.ToString]" />
+                          <p:RemoveUserFromGroup DisplayName="Remove User from Group" GroupDistinguishedName="[varStrNombreDistGroup]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="RemoveUserFromGroup_1" UserDistinguishedName="[varStrUserDistName]" />
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEach.Body>
+                  </ui:ForEach>
+                  <p:MoveObject DisplayName="Move Object" sap:VirtualizedContainerService.HintSize="307,22" sap2010:WorkflowViewState.IdRef="MoveObject_1" NewParentDistinguishedName="[varStrUsuariosBorrarOU]" ObjectDistinguishedName="[varStrUserDistName]" />
+                </Sequence>
+              </ActivityAction>
+            </p:ActiveDirectoryScope.Body>
+          </p:ActiveDirectoryScope>
+          <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="DSI.GOSC.CSU.OP7@enagas.es" Body="[&quot;La baja del usuario &quot; + inNombreUser + &quot; se ha realizado correctamente&quot;]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="434,145" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" IsBodyHtml="False" IsDraft="False" Subject="[&quot;Baja de usuario&quot; + inNombreUser]" To="soporte@company.es">
+            <ui:SendOutlookMail.Files>
+              <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+            </ui:SendOutlookMail.Files>
+          </ui:SendOutlookMail>
+        </Sequence>
       </If.Then>
+      <If.Else>
+        <ui:SendOutlookMail Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Account="DSI.GOSC.CSU.OP7@enagas.es" Body="[&quot;No se ha encontrado el usuario&quot; + inNombreUser]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,145" sap2010:WorkflowViewState.IdRef="SendOutlookMail_2" IsBodyHtml="False" IsDraft="False" Subject="[&quot;Baja de usuario&quot; + inNombreUser]" To="soporte@company.es">
+          <ui:SendOutlookMail.Files>
+            <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+          </ui:SendOutlookMail.Files>
+        </ui:SendOutlookMail>
+      </If.Else>
     </If>
   </Sequence>
 </Activity>
